@@ -10,7 +10,7 @@ export class SessionsController {
   async createSession(@Body() generateSessionDto: GenerateSessionDto) {
     const session = await this.sessionsService.create(generateSessionDto);
 
-    const link = `localhost:4200/session/${session.uuid}/${session.student_id}/${session.codeblock_id}`;
+    const link = `https://yuvalz19500.github.io/moveo-task-client/session/${session.uuid}/${session.student_id}/${session.codeblock_id}`;
     return { link };
   }
 }
