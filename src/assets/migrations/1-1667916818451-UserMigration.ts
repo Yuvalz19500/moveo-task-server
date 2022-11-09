@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class UserMigration1667864298898 implements MigrationInterface {
+export class UserMigration1667916818451 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `ALTER TABLE moveo.user RENAME COLUMN passowrd TO password;`,

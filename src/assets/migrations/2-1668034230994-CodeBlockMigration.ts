@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CodeBlockMigration1667916818451 implements MigrationInterface {
+export class CodeBlockMigration1668034230994 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`ALTER TABLE \`code_block\` DROP COLUMN \`code\``);
     await queryRunner.query(
