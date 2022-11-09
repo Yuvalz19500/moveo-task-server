@@ -13,7 +13,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user: User = await this.usersService.findOne({
-      select: ['username', 'password', 'userType'],
+      select: ['id', 'username', 'password', 'userType'],
       where: { username },
     });
 

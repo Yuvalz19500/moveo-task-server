@@ -9,5 +9,8 @@ export class SessionsController {
   @Post()
   async createSession(@Body() generateSessionDto: GenerateSessionDto) {
     const session = await this.sessionsService.create(generateSessionDto);
+
+    const link = `localhost:4200/session/${session.uuid}/${session.student_id}/${session.codeblock_id}`;
+    return { link };
   }
 }

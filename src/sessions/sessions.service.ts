@@ -14,6 +14,7 @@ export class SessionsService {
     const session = new Session();
 
     session.codeblock_id = generateSessionDto.codeblock_id;
+    session.student_id = generateSessionDto.student_id;
 
     return this.sessionsRepo.save(session);
   }
