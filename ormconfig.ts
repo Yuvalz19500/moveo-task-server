@@ -4,7 +4,7 @@ const dataSource = new DataSource({
   type: 'mysql',
   database: 'moveo',
   entities: ['dist/src/**/*.entity.js'],
-  synchronize: true,
+  synchronize: false,
   migrationsRun: true,
   username: 'moveo',
   password: 'moveo',
