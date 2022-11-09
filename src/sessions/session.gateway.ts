@@ -27,10 +27,29 @@ export class SessionGateway
 
   @SubscribeMessage('sendSessionCreds')
   async onSendSessionCreds(client: Socket, uuid: string) {
-    this.updateSessionManager(client, uuid);
+    this.addSessionToSessionManager(client, uuid);
   }
 
-  updateSessionManager(client: Socket, uuid: string) {
+  @SubscribeMessage('sendCodeChange')
+  async onSendCodeChange(client: Socket, args: any[]) {
+    const session = this.sessionManager.find(
+      (sessionItem) => sessionItem.uuid === args[0],
+    );
+    const otherClientsSockets = session.clientsSockets.filter(
+      (socketItem) => socketItem.id != client.id,
+    );
+
+    otherClientsSockets.forEach((socketItem) =>
+      socketItem.emit('receiveCodeChange', args[1]),
+    );
+  }
+
+  @SubscribeMessage('disconnectFromSession')
+  async onDisconnectFromSession(socket: Socket, uuid: string) {
+    this.removeSocketFromSessionManager(socket, uuid);
+  }
+
+  addSessionToSessionManager(client: Socket, uuid: string) {
     const session = this.sessionManager.find((s) => s.uuid === uuid);
     if (!!session) {
       session.clientsSockets.push(client);
@@ -41,6 +60,21 @@ export class SessionGateway
     } else {
       this.sessionManager.push({ uuid, clientsSockets: [client] });
     }
+
+    console.log('Yuval debug - ', this.sessionManager);
+  }
+
+  removeSocketFromSessionManager(socket: Socket, uuid: string) {
+    const session = this.sessionManager.find((s) => s.uuid === uuid);
+    session.clientsSockets = session.clientsSockets.filter(
+      (socketItem) => socketItem.id != socket.id,
+    );
+    this.sessionManager = [
+      ...this.sessionManager.filter((s) => s.uuid !== uuid),
+      session,
+    ];
+
+    console.log('Yuval debug - ', this.sessionManager);
   }
 }
 
