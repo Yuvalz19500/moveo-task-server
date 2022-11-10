@@ -10,7 +10,7 @@ export class SessionsController {
   async createSession(@Body() generateSessionDto: GenerateSessionDto) {
     const session = await this.sessionsService.create(generateSessionDto);
 
-    const link = `http://http://18.192.182.136/session/${session.uuid}/${session.student_id}/${session.codeblock_id}`;
+    const link = `http://18.192.182.136/session/${session.uuid}/${session.student_id}/${session.codeblock_id}`;
     return { link };
   }
 }
